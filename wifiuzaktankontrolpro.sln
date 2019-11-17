@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wifiuzaktankontrolpro", "wifiuzaktankontrolpro\wifiuzaktankontrolpro.csproj", "{05BB8867-F7C7-4303-B4BA-7ACBA86786CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05BB8867-F7C7-4303-B4BA-7ACBA86786CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BB8867-F7C7-4303-B4BA-7ACBA86786CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BB8867-F7C7-4303-B4BA-7ACBA86786CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BB8867-F7C7-4303-B4BA-7ACBA86786CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90D72B0E-3EAC-47FF-BE22-35D1E906AB3D}
+	EndGlobalSection
+EndGlobal
