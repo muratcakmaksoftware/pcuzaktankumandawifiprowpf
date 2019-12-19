@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:wifiuzaktankontrolpro"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="PC Uzaktan Kontrol Wifi PRO" Height="249.615" Width="566.934" Loaded="Window_Loaded" Icon="iconlast.ico" Closing="Window_Closing">
+        Title="PC Uzaktan Kontrol Wifi PRO v1.2" Height="249.615" Width="566.934" Loaded="Window_Loaded" Icon="iconlast.ico" Closing="Window_Closing">
     <Grid>
-        <TextBlock x:Name="txtPort" HorizontalAlignment="Right" Margin="0,10,9,0" TextWrapping="Wrap" Text="PORT:" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <TextBlock x:Name="txtPort" HorizontalAlignment="Right" Margin="0,10,9,0" TextWrapping="Wrap" Text="PORT:" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>        
         <TextBlock x:Name="txtBaglanan" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Bağlanan:" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" RenderTransformOrigin="1.706,1.486"/>
         <TextBlock x:Name="txtDrm" HorizontalAlignment="Left" Margin="10,61,0,0" TextWrapping="Wrap" Text="Komut:" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
         <TextBlock x:Name="txtIpInfo" HorizontalAlignment="Left" Margin="10,0,0,9" TextWrapping="Wrap" Text="Bağlanmanız için IP:" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" RenderTransformOrigin="1.706,1.486"/>
@@ -30,5 +30,7 @@
             </tb:TaskbarIcon.ContextMenu>
 
         </tb:TaskbarIcon>
+
+
     </Grid>
 </Window>

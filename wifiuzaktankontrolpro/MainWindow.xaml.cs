@@ -1,5 +1,4 @@
-﻿using AudioSwitcher.AudioApi.CoreAudio;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -14,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using static wifiuzaktankontrolpro.Win32;
 using Microsoft.Win32;
+using AudioSwitcher.AudioApi.CoreAudio;
+using NAudio.Wave;
+using NAudio.CoreAudioApi;
 
 namespace wifiuzaktankontrolpro
 {
@@ -30,7 +32,7 @@ namespace wifiuzaktankontrolpro
 
 
         //SES kontrol için
-        CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
+        CoreAudioDevice defaultPlaybackDevice;       
 
         //https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand
         //https://www.rapidtables.com/convert/number/hex-dec-bin-converter.html //hex çevirmelerini yapmak için.
@@ -46,8 +48,8 @@ namespace wifiuzaktankontrolpro
         public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,
             IntPtr wParam, IntPtr lParam);
 
-        RegistryKey regApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-        //private TaskbarIcon tb;
+        RegistryKey regApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             int processId = Process.GetCurrentProcess().Id;
@@ -94,6 +96,10 @@ namespace wifiuzaktankontrolpro
                 {
                     port = yazi.Replace("port:", "");
                 }
+                if (yazi.IndexOf("sesportu:") != -1)
+                {
+                    sesPortu = yazi.Replace("sesportu:", "");                    
+                }
             }
             sw.Close();
             fs.Close();
@@ -123,13 +129,77 @@ namespace wifiuzaktankontrolpro
             dispatcherTimer.Start();
 
 
+            // ############ BİLGİSAYAR SESLERİNİ GÖNDERME ############
+            bilgisayarSesleriniOku();
 
+            //Ses göndermede çakışma olmaması için burada çalışması gereklidir!
+            defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
         }
+
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             txtIpInfo.Text = "Bağlanmanız için IP: " + GetLocalIPAddress();
         }
+
+        WasapiLoopbackCapture waveInStream;        
+        void bilgisayarSesleriniOku()
+        {
+            //Bilgisayar Seslerini Okumak için            
+            waveInStream = new WasapiLoopbackCapture(); // Bilgisayardaki tüm sesleri verir.                        
+            waveInStream.DataAvailable += new EventHandler<WaveInEventArgs>(this.OnDataAvailable); //Ses bilgileri eventa gidecek.
+            waveInStream.RecordingStopped += new EventHandler<StoppedEventArgs>(this.OnDataStopped); //Durdurulduğunda çalışacak event.
+            //waveInStream.StartRecording();//test
+        }
+
+        WaveStreamToConvert16 WSTC = new WaveStreamToConvert16();
+        private void OnDataAvailable(object sender, WaveInEventArgs e) //38400
+        {
+            //byte[] output = Convert16(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat);                        
+            //MessageBox.Show(WSTC.Convert16(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat, 16000).Length.ToString());
+
+            if(waveInStream.CaptureState == CaptureState.Capturing)
+                clienteSesleriGonder(WSTC.Convert16(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat, 16000));
+        }
+
+        private void OnDataStopped(object sender, StoppedEventArgs e)
+        {    
+            if (waveInStream != null)
+            {
+                waveInStream.Dispose(); //ramden stream siliniyor.
+                //Stream üzerinde daha kalmasına karşılık, Sabit veriler Tekrar oluşturuluyor.
+                bilgisayarSesleriniOku();
+            }
+                
+        }
+
+        void clienteSesleriGonder(byte[] outStream)
+        {
+            new Thread(() =>
+            {
+                try
+                {                    
+                    TcpClient clientSocket = new TcpClient();
+                    clientSocket.Connect(clientip, Convert.ToInt32(sesPortu)); //"127.0.0.1" //clientip                    
+                    NetworkStream serverStream = clientSocket.GetStream();
+                    serverStream.Write(outStream, 0, outStream.Length);
+                    serverStream.Flush();
+                    serverStream.Close();
+                    clientSocket.Close();
+                }
+                catch
+                {
+                    //MessageBox.Show("Hata: " + ex.ToString());
+                    if (waveInStream != null) //Eğer hata olursa muhtemel Clientin yani telefondaki app kapatıldığı yada bağlantının bir şekilde kesildiğinden Kayıt durdurulacak.
+                    {
+                        waveInStream.StopRecording();
+                    }
+                }
+            }).Start();
+
+        }
+
+       
 
         string clientip = "";
         Socket IstemciSoketi;
@@ -137,6 +207,7 @@ namespace wifiuzaktankontrolpro
         TcpListener TcpDinleyicisi;
         Thread serverSocketTh;
         string port = "5000";
+        string sesPortu = "3090";
         void clientiOku()
         {
             //istemci server bağlama
@@ -312,6 +383,18 @@ namespace wifiuzaktankontrolpro
                                     }
 
                                 }
+                                else if (IstemciString.IndexOf("sesPortuBilgi=") != -1)
+                                {
+                                    clienteGonder("sesPortu", sesPortu);
+                                }
+                                else if(IstemciString.IndexOf("bilgisayarSesleriniGonder=") != -1)
+                                {
+                                    waveInStream.StartRecording();
+                                }
+                                else if (IstemciString.IndexOf("bilgisayarSesleriniDurdur=") != -1)
+                                {
+                                    waveInStream.StopRecording();
+                                }
 
                                 Dispatcher.Invoke(() =>
                                 {
@@ -340,11 +423,11 @@ namespace wifiuzaktankontrolpro
 
             }
 
-
-
+          
 
 
         }
+
 
         void clienteGonder(string tag, string deger)
         {
@@ -362,9 +445,9 @@ namespace wifiuzaktankontrolpro
                     serverStream.Close();
                     clientSocket.Close();
                 }
-                catch (IOException ex)
+                catch // (IOException ex)
                 {
-                    MessageBox.Show("Hata: " + ex.ToString());
+                    //MessageBox.Show("Hata: " + ex.ToString());
                 }
             }).Start();
 
@@ -492,8 +575,7 @@ namespace wifiuzaktankontrolpro
 
         private void ntfTskIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            AppShow();
-             
+            AppShow();             
         }
 
         //Window Minimize Event
@@ -510,6 +592,8 @@ namespace wifiuzaktankontrolpro
 
             return IntPtr.Zero;
         }
+
+       
     }
 
 

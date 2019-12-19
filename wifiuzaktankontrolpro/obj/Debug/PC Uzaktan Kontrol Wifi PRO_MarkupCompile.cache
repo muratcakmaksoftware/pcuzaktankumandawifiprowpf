@@ -1,19 +1,19 @@
-﻿PCUzaktanKontrolWifiPRO
+﻿PC Uzaktan Kontrol Wifi PRO
 
 
 winexe
 C#
 .cs
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Debug\
 wifiuzaktankontrolpro
 none
 false
-TRACE
+TRACE;DEBUG
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\App.xaml
 11151548125
 
-7-162465739
-171977499468
+8-1113857440
+18106748991
 MainWindow.xaml;
 
 False

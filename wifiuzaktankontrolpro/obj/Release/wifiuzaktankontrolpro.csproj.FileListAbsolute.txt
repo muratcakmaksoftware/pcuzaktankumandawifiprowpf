@@ -17,22 +17,24 @@ C:\Users\Ruhsuz Sirin\Desktop\Projeler\wifiuzaktankontrolpro\wifiuzaktankontrolp
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\wifiuzaktankontrolpro.csproj.CopyComplete
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO.exe
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO.pdb
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\PCUzaktanKontrolWifiPRO.exe.config
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\PCUzaktanKontrolWifiPRO.exe
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\PCUzaktanKontrolWifiPRO.pdb
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\App.g.cs
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\AudioSwitcher.AudioApi.CoreAudio.dll
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\AudioSwitcher.AudioApi.dll
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\Hardcodet.Wpf.TaskbarNotification.dll
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\NAudio.dll
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\Hardcodet.Wpf.TaskbarNotification.pdb
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\Hardcodet.Wpf.TaskbarNotification.xml
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\NAudio.xml
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\MainWindow.g.cs
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\App.g.cs
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO_MarkupCompile.cache
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO_MarkupCompile.lref
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\MainWindow.baml
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO.g.resources
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\wifiuzaktankontrolpro.Properties.Resources.resources
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\wifiuzaktankontrolpro.csproj.GenerateResource.cache
 C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\wifiuzaktankontrolpro.csproj.CopyComplete
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO.exe
-C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PCUzaktanKontrolWifiPRO.pdb
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PC Uzaktan Kontrol Wifi PRO_MarkupCompile.cache
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PC Uzaktan Kontrol Wifi PRO_MarkupCompile.lref
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\PC Uzaktan Kontrol Wifi PRO.exe.config
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\PC Uzaktan Kontrol Wifi PRO.exe
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\bin\Release\PC Uzaktan Kontrol Wifi PRO.pdb
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PC Uzaktan Kontrol Wifi PRO.g.resources
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PC Uzaktan Kontrol Wifi PRO.exe
+C:\Users\Ruhsuz Sirin\Desktop\Projeler\PCUzaktanKontrolWifiPRO\wifiuzaktankontrolpro\wifiuzaktankontrolpro\obj\Release\PC Uzaktan Kontrol Wifi PRO.pdb
