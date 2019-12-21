@@ -1,2 +1,3 @@
 port:5000
 sesportu:3090
+ses_paylasim_1-60_Kalitesi:60

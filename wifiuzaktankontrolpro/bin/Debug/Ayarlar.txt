@@ -1,2 +1,0 @@
-port:5000
-sesportu:3090

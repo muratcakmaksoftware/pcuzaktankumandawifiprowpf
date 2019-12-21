@@ -48,8 +48,11 @@ namespace wifiuzaktankontrolpro
         public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,
             IntPtr wParam, IntPtr lParam);
 
-        RegistryKey regApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);        
+        RegistryKey regApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
+        WaveFormat outFormat;
+        int sesKalitesi = 60; // varsayılan ses kalitesi 1 ile 60 arasındadır.
+        int reSampleRate = 48000;  //varsayılan örnekleme hızı/oranı // detay bilgi için: https://youtu.be/ltBvM53pHFc
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             int processId = Process.GetCurrentProcess().Id;
@@ -96,15 +99,19 @@ namespace wifiuzaktankontrolpro
                 {
                     port = yazi.Replace("port:", "");
                 }
-                if (yazi.IndexOf("sesportu:") != -1)
+                else if (yazi.IndexOf("sesportu:") != -1)
                 {
                     sesPortu = yazi.Replace("sesportu:", "");                    
+                }
+                else if (yazi.IndexOf("ses_paylasim_1-60_Kalitesi:") != -1)
+                {
+                    sesKalitesi = Convert.ToInt32(yazi.Replace("ses_paylasim_1-60_Kalitesi:", ""));                    
                 }
             }
             sw.Close();
             fs.Close();
 
-
+            
             try
             {
                 TcpDinleyicisi = new TcpListener(Convert.ToInt32(port));
@@ -144,33 +151,69 @@ namespace wifiuzaktankontrolpro
 
         WasapiLoopbackCapture waveInStream;        
         void bilgisayarSesleriniOku()
-        {
+        {            
             //Bilgisayar Seslerini Okumak için            
-            waveInStream = new WasapiLoopbackCapture(); // Bilgisayardaki tüm sesleri verir.                        
-            waveInStream.DataAvailable += new EventHandler<WaveInEventArgs>(this.OnDataAvailable); //Ses bilgileri eventa gidecek.
+            waveInStream = new WasapiLoopbackCapture(); // Kısaca Bilgisayardaki tüm sesleri verir yapısı tekrarlamak.
+            waveInStream.DataAvailable += new EventHandler<WaveInEventArgs>(this.OnDataAvailable); //Ses bilgileri event gönderilir.
             waveInStream.RecordingStopped += new EventHandler<StoppedEventArgs>(this.OnDataStopped); //Durdurulduğunda çalışacak event.
-            //waveInStream.StartRecording();//test
+            reSampleRate = waveInStream.WaveFormat.SampleRate; // yeniden örnekleme hızının ses kartından gelen örneklenmiş hız ile aynı olacak şekilde ayarladık ki sesde bozukluk olmasın.
+            //Dönüştürme için ayarlar belirliyoruz bunlar : Örneklem Hızı(Sample Rate), Bit, STEREO = 2 VEYA MONO = 1 dir.
+            outFormat = new WaveFormat(reSampleRate, 16, 2); // kaç bitten gelirse gelsin varsayılan olarak 16 bit ve stereo olacak şekilde ayarlandı.
+
         }
 
-        WaveStreamToConvert16 WSTC = new WaveStreamToConvert16();
+        
         private void OnDataAvailable(object sender, WaveInEventArgs e) //38400
         {
-            //byte[] output = Convert16(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat);                        
-            //MessageBox.Show(WSTC.Convert16(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat, 16000).Length.ToString());
-
-            if(waveInStream.CaptureState == CaptureState.Capturing)
-                clienteSesleriGonder(WSTC.Convert16(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat, 16000));
+            //if(waveInStream.CaptureState == CaptureState.Capturing)
+            byte[] output = WaveFormatConvert(e.Buffer, e.BytesRecorded, waveInStream.WaveFormat, outFormat);
+            clienteSesleriGonder(output);
         }
 
         private void OnDataStopped(object sender, StoppedEventArgs e)
         {    
             if (waveInStream != null)
             {
-                waveInStream.Dispose(); //ramden stream siliniyor.
-                //Stream üzerinde daha kalmasına karşılık, Sabit veriler Tekrar oluşturuluyor.
-                bilgisayarSesleriniOku();
+                waveInStream.Dispose(); //ramden stream siliniyor.                
+                bilgisayarSesleriniOku(); // Değişkenler tekrar oluşturuluyor.
             }
                 
+        }
+
+        //https://github.com/naudio/NAudio/issues/174 dan geliştirdiğim ve WaveFormatConvert yarattım.
+        // Ses kartından gelen sesleri resample yani yeniden örneklemeye çalıştığımızdan Hz değerlerinin aynı olmasına dikkat edelim.
+        /*
+            Ses kartından gelen değerler Örnek:
+            48000 Hz(Sample Rate) 24 bit STEREO 
+            -> Convert
+            48000 Hz(Sample Rate) 16 bit STEREO olacak şekilde daha iyi ses alırız.
+        */
+        public byte[] WaveFormatConvert(byte[] input, int length, WaveFormat inFormat, WaveFormat outFormat) 
+        {
+            if (length == 0)
+                return new byte[0];
+            using (var memStream = new MemoryStream(input, 0, length))
+            {
+                using (var inputStream = new RawSourceWaveStream(memStream, inFormat))
+                {
+                    using (var resampler = new MediaFoundationResampler(inputStream, outFormat))
+                    {
+                        resampler.ResamplerQuality = sesKalitesi; // 1 low - 60 max high
+                        //CONVERTED READ STREAM
+                        byte[] buffer = new byte[length];
+                        using (var stream = new MemoryStream())
+                        {
+                            int read;
+                            while ((read = resampler.Read(buffer, 0, length)) > 0)
+                            {
+                                stream.Write(buffer, 0, read);
+                            }
+                            return stream.ToArray();
+                        }
+                    }
+
+                }
+            }
         }
 
         void clienteSesleriGonder(byte[] outStream)
@@ -387,6 +430,10 @@ namespace wifiuzaktankontrolpro
                                 {
                                     clienteGonder("sesPortu", sesPortu);
                                 }
+                                else if (IstemciString.IndexOf("sesSampleRateAl=") != -1)
+                                {
+                                    clienteGonder("sesSampleRate", reSampleRate.ToString());
+                                }
                                 else if(IstemciString.IndexOf("bilgisayarSesleriniGonder=") != -1)
                                 {
                                     waveInStream.StartRecording();
@@ -394,8 +441,8 @@ namespace wifiuzaktankontrolpro
                                 else if (IstemciString.IndexOf("bilgisayarSesleriniDurdur=") != -1)
                                 {
                                     waveInStream.StopRecording();
-                                }
-
+                                }                                
+                                
                                 Dispatcher.Invoke(() =>
                                 {
                                     txtDrm.Text = "Komut:" + IstemciString;

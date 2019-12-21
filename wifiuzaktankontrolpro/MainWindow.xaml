@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:wifiuzaktankontrolpro"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="PC Uzaktan Kontrol Wifi PRO v1.2" Height="249.615" Width="566.934" Loaded="Window_Loaded" Icon="iconlast.ico" Closing="Window_Closing">
+        Title="PC Uzaktan Kontrol Wifi PRO v1.2.5" Height="249.615" Width="566.934" Loaded="Window_Loaded" Icon="iconlast.ico" Closing="Window_Closing">
     <Grid>
         <TextBlock x:Name="txtPort" HorizontalAlignment="Right" Margin="0,10,9,0" TextWrapping="Wrap" Text="PORT:" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>        
         <TextBlock x:Name="txtBaglanan" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Bağlanan:" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" RenderTransformOrigin="1.706,1.486"/>
